@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WhatsApp Link Redirector</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+		}
+
+		h1 {
+			text-align: center;
+		}
+
+		label {
+			display: block;
+			margin-top: 10px;
+		}
+
+		input[type="text"] {
+			padding: 5px;
+			margin-bottom: 10px;
+		}
+
+		button {
+			padding: 10px 20px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			margin-top: 10px;
+		}
+
+		button:hover {
+			background-color: #3e8e41;
+		}
+	</style>
+	<script>
+		function saveLinks() {
+			var oldLink = document.getElementById("old-link").value;
+			var newLink = document.getElementById("new-link").value;
+
+			// Store links in local storage
+			localStorage.setItem("oldLink", oldLink);
+			localStorage.setItem("newLink", newLink);
+
+			// Show success message
+			alert("Links saved successfully!");
+		}
+
+		// Redirect old link to new link
+		var oldLink = localStorage.getItem("oldLink");
+		var newLink = localStorage.getItem("newLink");
+
+		if (oldLink && newLink) {
+			document.addEventListener("DOMContentLoaded", function() {
+				var links = document.getElementsByTagName("a");
+				for (var i = 0; i < links.length; i++) {
+					if (links[i].href === oldLink) {
+						links[i].href = newLink;
+					}
+				}
+			});
+		}
+
+		function testRedirect() {
+		  var oldLink = localStorage.getItem("oldLink");
+		  var newLink = localStorage.getItem("newLink");
+
+		  if (oldLink && newLink) {
+		    var redirecting = false;
+		    var links = document.getElementsByTagName("a");
+		    for (var i = 0; i < links.length; i++) {
+		      if (links[i].href === oldLink) {
+		        redirecting = true;
+		        break;
+		      }
+		    }
+		    if (redirecting) {
+		      alert("The old link is being redirected to the new link.");
+		    } else {
+		      alert("The old link is not being redirected to the new link.");
+		    }
+		  } else {
+		    alert("Please save the links first.");
+		  }
+		}
+	</script>
+</head>
+<body>
+	<h1>WhatsApp Link Redirector</h1>
+	<label for="old-link">Old WhatsApp Link:</label>
+	<input type="text" id="old-link" placeholder="Enter old link here">
+	<label for="new-link">New WhatsApp Link:</label>
+	<input type="text" id="new-link" placeholder="Enter new link here">
+	<button onclick="saveLinks()">Save</button>
+	<button onclick="testRedirect()">Test Redirect</button>
+</body>
+</html>
